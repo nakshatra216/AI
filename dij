@@ -1,0 +1,60 @@
+# Dijkstra's Shortest Path Algorithm
+
+import sys
+
+# Number of vertices
+V = 5
+
+# Graph represented using adjacency matrix
+graph = [
+    [0, 10, 0, 30, 100],
+    [10, 0, 50, 0, 0],
+    [0, 50, 0, 20, 10],
+    [30, 0, 20, 0, 60],
+    [100, 0, 10, 60, 0]
+]
+
+# Function to find vertex with minimum distance
+def min_distance(dist, visited):
+
+    minimum = sys.maxsize
+    min_index = -1
+
+    for v in range(V):
+        if dist[v] < minimum and visited[v] == False:
+            minimum = dist[v]
+            min_index = v
+
+    return min_index
+
+
+# Dijkstra Algorithm
+def dijkstra(src):
+
+    dist = [sys.maxsize] * V
+    dist[src] = 0
+
+    visited = [False] * V
+
+    for _ in range(V):
+
+        u = min_distance(dist, visited)
+        visited[u] = True
+
+        for v in range(V):
+
+            if (graph[u][v] > 0 and
+                visited[v] == False and
+                dist[v] > dist[u] + graph[u][v]):
+
+                dist[v] = dist[u] + graph[u][v]
+
+    # Print shortest distances
+    print("Vertex \t Distance from Source")
+
+    for node in range(V):
+        print(node, "\t\t", dist[node])
+
+
+# Driver Code
+dijkstra(0)
